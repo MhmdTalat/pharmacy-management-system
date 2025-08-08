@@ -196,9 +196,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Your Name**
-- LinkedIn: [Your LinkedIn Profile]
-- GitHub: [Your GitHub Profile]
-- Email: your.email@example.com
+- LinkedIn: [https://www.linkedin.com/in/muhammed-tallat-a440881b7/]
+- GitHub: [https://github.com/MhmdTalat]
+- Email: muhammedtallat4@gmail.com
 
 ## 🙏 Acknowledgments
 
