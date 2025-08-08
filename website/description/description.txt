@@ -1,0 +1,108 @@
+/*
+🧾 1. CustomerController.cs
+
+ public IActionResult Index();          // List all customers
+public IActionResult Details(int id);  // View one customer
+public IActionResult Create();         // Show create form
+[HttpPost] public IActionResult Create(Customer customer);
+public IActionResult Edit(int id);
+[HttpPost] public IActionResult Edit(int id, Customer customer);
+public IActionResult Delete(int id);
+[HttpPost] public IActionResult DeleteConfirmed(int id);
+
+
+
+
+💊 2. MedicineController.cs
+
+public IActionResult Index();
+public IActionResult Details(int id);
+public IActionResult Create();
+[HttpPost] public IActionResult Create(Medicine medicine);
+public IActionResult Edit(int id);
+[HttpPost] public IActionResult Edit(int id, Medicine medicine);
+public IActionResult Delete(int id);
+[HttpPost] public IActionResult DeleteConfirmed(int id);
+
+
+
+🛒 3. OrderController.cs (for CWMMDD.CUSTOMERORDER)
+
+public IActionResult Index(); // List all orders
+public IActionResult Details(int id);
+public IActionResult Create();
+[HttpPost] public IActionResult Create(CustomerOrder order);
+public IActionResult Edit(int id);
+[HttpPost] public IActionResult Edit(int id, CustomerOrder order);
+public IActionResult Delete(int id);
+[HttpPost] public IActionResult DeleteConfirmed(int id);
+
+
+
+
+
+📦 4. CartController.cs
+
+public IActionResult Index();
+public IActionResult Details(int id);
+public IActionResult Create();
+[HttpPost] public IActionResult Create(Cart cart);
+public IActionResult Edit(int id);
+[HttpPost] public IActionResult Edit(int id, Cart cart);
+public IActionResult Delete(int id);
+[HttpPost] public IActionResult DeleteConfirmed(int id);
+
+
+
+🧺 5. CartItemController.cs
+
+public IActionResult Index(int cartId);
+public IActionResult Create(int cartId);
+[HttpPost] public IActionResult Create(CartItem item);
+public IActionResult Edit(int id);
+[HttpPost] public IActionResult Edit(int id, CartItem item);
+public IActionResult Delete(int id);
+[HttpPost] public IActionResult DeleteConfirmed(int id);
+
+
+
+💵 6. SaleController.cs and SaleDetailsController.cs
+
+
+public IActionResult Index();
+public IActionResult Details(int id);
+public IActionResult Create();
+[HttpPost] public IActionResult Create(Sale sale);
+
+public IActionResult AddSaleDetail(int saleId);
+[HttpPost] public IActionResult AddSaleDetail(SaleDetail detail);
+
+
+
+
+
+👤 7. UserAccountController.cs (Login/admin)
+
+public IActionResult Index(); // Admins only
+public IActionResult Login();
+[HttpPost] public IActionResult Login(UserAccount user);
+public IActionResult Register();
+[HttpPost] public IActionResult Register(UserAccount user);
+public IActionResult Logout();
+
+
+
+
+
+
+
+🔐 8. UsersController.cs (System Admins or Pharmacists)
+
+public IActionResult Index();
+public IActionResult Details(string id); // Use full_name or another PK
+public IActionResult Create();
+[HttpPost] public IActionResult Create(Users user);
+public IActionResult Edit(string id);
+[HttpPost] public IActionResult Edit(string id, Users user);
+public IActionResult Delete(string id);
+[HttpPost] public IActionResult DeleteConfirmed(string id);*/

@@ -1,0 +1,51 @@
+﻿@model website.Models.Medicine
+
+@{
+    ViewData["Title"] = "Medicine Details";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Medicine Details</h2>
+
+    <div class="bg-light p-4 border rounded shadow-sm mb-4">
+        <dl class="row">
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Medicineid)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Medicineid)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Name)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Name)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Description)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Description)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Manufacturer)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Manufacturer)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Price)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Price)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Discount)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Discount)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Stockquantity)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Stockquantity)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Expirydate)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Expirydate)</dd>
+
+            @* Optional image display *@
+            @if (!string.IsNullOrEmpty(Model.Imagepath))
+            {
+                <dt class="col-sm-3">Image</dt>
+                <dd class="col-sm-9">
+                    <img src="@Model.Imagepath" alt="Medicine Image" class="img-fluid rounded" style="max-height: 200px;" />
+                </dd>
+            }
+        </dl>
+    </div>
+
+    <div class="d-flex gap-2">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Medicineid }, new { @class = "btn btn-warning" })
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>

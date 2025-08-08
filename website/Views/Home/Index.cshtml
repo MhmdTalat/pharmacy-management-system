@@ -1,0 +1,617 @@
+﻿@model IEnumerable<website.Models.Medicine>
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, rgba(44, 90, 160, 0.95), rgba(52, 211, 153, 0.85)), url('images/hero_1.jpg');
+        background-size: cover;
+        background-position: center;
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        color: white;
+        position: relative;
+    }
+
+    .hero-content {
+        max-width: 600px;
+    }
+
+    .hero-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        opacity: 0.95;
+    }
+
+    .btn-hero {
+        background: var(--accent-color);
+        border: none;
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+        .btn-hero:hover {
+            background: #e59400;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+        }
+
+    .feature-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        text-align: center;
+        height: 100%;
+        transition: all 0.3s ease;
+        border: 1px solid var(--border-color);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 2rem;
+        color: white;
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 3rem;
+        color: var(--dark-color);
+        position: relative;
+    }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+    .product-card {
+        background: white;
+        border-radius: 1rem;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid var(--border-color);
+        height: 100%;
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+    .product-image {
+        height: 250px;
+        background: var(--light-gray);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+    .product-card:hover .product-image img {
+        transform: scale(1.05);
+    }
+
+    .product-badge {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background: var(--accent-color);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .product-info {
+        padding: 1.5rem;
+    }
+
+    .product-name {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--dark-color);
+    }
+
+    .product-category {
+        color: #6b7280;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .product-price {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+
+        .product-price del {
+            color: #9ca3af;
+            font-weight: 400;
+            margin-right: 0.5rem;
+        }
+
+    .testimonial-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        text-align: center;
+        border: 1px solid var(--border-color);
+        height: 100%;
+    }
+
+    .testimonial-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin: 0 auto 1.5rem;
+        border: 4px solid var(--secondary-color);
+    }
+
+    .testimonial-text {
+        font-style: italic;
+        margin-bottom: 1.5rem;
+        color: #4b5563;
+        line-height: 1.6;
+    }
+
+    .testimonial-author {
+        font-weight: 600;
+        color: var(--dark-color);
+    }
+
+    .stats-section {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 4rem 0;
+        margin: 4rem 0;
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    .cta-section {
+        background: var(--light-gray);
+        padding: 4rem 0;
+        text-align: center;
+    }
+
+    .cta-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--dark-color);
+    }
+
+    .cta-subtitle {
+        font-size: 1.2rem;
+        color: #6b7280;
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="hero-content">
+                    <h1 class="hero-title">Your Health, Our Priority</h1>
+                    <p class="hero-subtitle">
+                        Professional pharmaceutical solutions with trusted quality, expert care, and convenient delivery to support your wellness journey every step of the way.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="/products" class="btn btn-hero me-3">Explore Products</a>
+                        <a href="/services/consultation" class="btn btn-outline-light btn-lg">Book Consultation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light position-relative" style="margin-top: -50px; z-index: 10;">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Feature: Free Delivery -->
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4 h-100 shadow-sm bg-white rounded-4">
+                    <div class="feature-icon mb-3 text-primary fs-1">
+                        <span class="icon-truck" aria-hidden="true"></span>
+                    </div>
+                    <h4 class="fw-bold mb-2">Free Delivery</h4>
+                    <p class="text-muted">
+                        Fast and secure delivery for orders over $50. Same-day delivery available in select areas with real-time tracking.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Feature: Quality Assured -->
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4 h-100 shadow-sm bg-white rounded-4">
+                    <div class="feature-icon mb-3 text-success fs-1">
+                        <span class="icon-shield" aria-hidden="true"></span>
+                    </div>
+                    <h4 class="fw-bold mb-2">Quality Assured</h4>
+                    <p class="text-muted">
+                        All products are sourced from licensed manufacturers and undergo rigorous quality control testing before delivery.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Feature: 24/7 Support -->
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4 h-100 shadow-sm bg-white rounded-4">
+                    <div class="feature-icon mb-3 text-info fs-1">
+                        <span class="icon-headphones" aria-hidden="true"></span>
+                    </div>
+                    <h4 class="fw-bold mb-2">24/7 Support</h4>
+                    <p class="text-muted">
+                        Professional pharmacist support available around the clock for consultations, prescriptions, and health guidance.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-6 col-lg-4">
+                    <div class="product-card position-relative">
+                        <div class="product-image">
+                            @if (!string.IsNullOrEmpty(item.Imagepath))
+                            {
+                                <img src="@Url.Content(item.Imagepath)" alt="@item.Name" style="max-height: 250px;" class="img-fluid" />
+                            }
+                            else
+                            {
+                                <img src="/images/placeholder.png" alt="No image" class="img-fluid" />
+                            }
+                        </div>
+                        <div class="product-info p-3">
+                            <div class="product-category text-muted small">@item.Manufacturer</div>
+                            <h3 class="product-name h5">@item.Name</h3>
+                            <div class="product-price mb-2">
+                                @if (item.Discount.HasValue && item.Discount.Value > 0)
+                                {
+                                    var discountedPrice = item.Price - (item.Price * item.Discount.Value / 100);
+                                    <span class="text-danger fw-bold">$@discountedPrice </span>
+                                    <span class="text-muted text-decoration-line-through ms-2">$@item.Price</span>
+                                    <div class="text-success small">@item.Discount% off</div>
+                                }
+                                else
+                                {
+                                    <span class="fw-bold">$@item.Price</span>
+                                }
+                            </div>
+                            <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@item.Medicineid" class="btn btn-sm btn-outline-success mt-2">
+                                <i class="bi bi-cart-plus me-1"></i> Add to Cart
+                            </a>
+
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <a href="/Medicine/Index" class="btn btn-primary btn-lg px-5">View All Products</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Statistics Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <span class="stat-number">50K+</span>
+                    <span class="stat-label">Happy Customers</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">Years Experience</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <span class="stat-number">2K+</span>
+                    <span class="stat-label">Products Available</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Customer Support</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title">What Our Customers Say</h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="testimonial-card">
+                    <img src="images/person_1.jpg" alt="Sarah Johnson" class="testimonial-avatar">
+                    <p class="testimonial-text">
+                        "Exceptional service and quality products. The pharmacist consultation helped me choose the right supplements for my health goals."
+                    </p>
+                    <div class="testimonial-author">Sarah Johnson</div>
+                    <small class="text-muted">Verified Customer</small>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="testimonial-card">
+                    <img src="images/person_2.jpg" alt="Michael Chen" class="testimonial-avatar">
+                    <p class="testimonial-text">
+                        "Fast delivery and authentic medications. The mobile app makes reordering prescriptions so convenient. Highly recommended!"
+                    </p>
+                    <div class="testimonial-author">Michael Chen</div>
+                    <small class="text-muted">Regular Customer</small>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="testimonial-card">
+                    <img src="images/person_3.jpg" alt="Emily Rodriguez" class="testimonial-avatar">
+                    <p class="testimonial-text">
+                        "The health consultation service is outstanding. Professional advice that helped me manage my chronic condition better."
+                    </p>
+                    <div class="testimonial-author">Emily Rodriguez</div>
+                    <small class="text-muted">Healthcare Professional</small>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="testimonial-card">
+                    <img src="images/person_4.jpg" alt="David Thompson" class="testimonial-avatar">
+                    <p class="testimonial-text">
+                        "Reliable, professional, and trustworthy. They've been my go-to pharmacy for over 5 years. Never disappointed!"
+                    </p>
+                    <div class="testimonial-author">David Thompson</div>
+                    <small class="text-muted">Loyal Customer</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Health Categories Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title">Health Categories</h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="category-card text-center">
+                    <div class="category-icon mb-3">
+                        <span class="icon-heart" style="font-size: 3rem; color: var(--primary-color);"></span>
+                    </div>
+                    <h4>Cardiovascular Health</h4>
+                    <p>Heart medications, blood pressure monitors, and cardiovascular supplements.</p>
+                    <a href="/products/cardiovascular" class="btn btn-outline-primary">Explore</a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="category-card text-center">
+                    <div class="category-icon mb-3">
+                        <span class="icon-brain" style="font-size: 3rem; color: var(--primary-color);"></span>
+                    </div>
+                    <h4>Mental Wellness</h4>
+                    <p>Stress relief, cognitive support, and mental health resources.</p>
+                    <a href="/products/mental-health" class="btn btn-outline-primary">Explore</a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="category-card text-center">
+                    <div class="category-icon mb-3">
+                        <span class="icon-leaf" style="font-size: 3rem; color: var(--primary-color);"></span>
+                    </div>
+                    <h4>Natural Supplements</h4>
+                    <p>Herbal remedies, organic vitamins, and natural health products.</p>
+                    <a href="/products/natural" class="btn btn-outline-primary">Explore</a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="category-card text-center">
+                    <div class="category-icon mb-3">
+                        <span class="icon-plus" style="font-size: 3rem; color: var(--primary-color);"></span>
+                    </div>
+                    <h4>First Aid & Emergency</h4>
+                    <p>Emergency medications, first aid supplies, and safety equipment.</p>
+                    <a href="/products/emergency" class="btn btn-outline-primary">Explore</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section">
+    <div class="container">
+        <h2 class="cta-title">Ready to Start Your Health Journey?</h2>
+        <p class="cta-subtitle">
+            Join thousands of satisfied customers who trust PharmaPro for their healthcare needs.
+            Get personalized recommendations and professional support every step of the way.
+        </p>
+        <div class="cta-actions">
+            <a href="/register" class="btn btn-primary btn-lg me-3">Create Account</a>
+            <a href="/services/consultation" class="btn btn-outline-primary btn-lg">Book Consultation</a>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="py-5" style="background: var(--dark-color); color: white;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h3 class="mb-3">Stay Updated on Health & Wellness</h3>
+                <p class="mb-0">Get the latest health tips, product updates, and exclusive offers delivered to your inbox.</p>
+            </div>
+            <div class="col-md-6">
+                <form class="newsletter-form d-flex gap-2 mt-3 mt-md-0">
+                    <input type="email" class="form-control form-control-lg" placeholder="Enter your email address" required>
+                    <button type="submit" class="btn btn-secondary btn-lg px-4">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .category-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        height: 100%;
+        transition: all 0.3s ease;
+        border: 1px solid var(--border-color);
+    }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+    .newsletter-form input {
+        border-radius: 50px;
+        border: 1px solid #374151;
+        background: rgba(255,255,255,0.1);
+        color: white;
+        padding: 0.75rem 1.5rem;
+    }
+
+        .newsletter-form input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .newsletter-form input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 211, 153, 0.25);
+            background: rgba(255,255,255,0.15);
+        }
+
+    .newsletter-form button {
+        border-radius: 50px;
+        background: var(--secondary-color);
+        border: none;
+        white-space: nowrap;
+    }
+
+        .newsletter-form button:hover {
+            background: #10b981;
+            transform: translateY(-1px);
+        }
+
+
+    .product-card {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+        transition: transform 0.2s ease;
+    }
+
+        .product-card:hover {
+            transform: scale(1.02);
+        }
+
+    .product-image img {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .product-info {
+        padding: 15px;
+    }
+
+</style>

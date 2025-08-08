@@ -1,0 +1,83 @@
+﻿@model website.Models.Medicine
+
+@{
+    ViewData["Title"] = "Edit Medicine";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Edit Medicine</h2>
+
+    <form asp-action="Edit" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="Medicineid" class="form-label"></label>
+            <input asp-for="Medicineid" class="form-control" readonly />
+            <span asp-validation-for="Medicineid" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Manufacturer" class="form-label"></label>
+            <input asp-for="Manufacturer" class="form-control" />
+            <span asp-validation-for="Manufacturer" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Price" class="form-label"></label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Discount" class="form-label"></label>
+            <input asp-for="Discount" class="form-control" />
+            <span asp-validation-for="Discount" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Stockquantity" class="form-label"></label>
+            <input asp-for="Stockquantity" class="form-control" />
+            <span asp-validation-for="Stockquantity" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Expirydate" class="form-label"></label>
+            <input asp-for="Expirydate" type="date" class="form-control" />
+            <span asp-validation-for="Expirydate" class="text-danger"></span>
+        </div>
+
+        <!-- Image display and upload -->
+        <div class="mb-3">
+            <label class="form-label">Current Image</label><br />
+            @if (!string.IsNullOrEmpty(Model.Imagepath))
+            {
+                <img src="@Url.Content(Model.Imagepath)" width="150" class="mb-2 border rounded shadow-sm" />
+            }
+        </div>
+
+        <div class="mb-3">
+            <label for="imageFile" class="form-label">Upload New Image</label>
+            <input type="file" name="imageFile" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
+    </form>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

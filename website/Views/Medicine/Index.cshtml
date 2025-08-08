@@ -1,0 +1,87 @@
+﻿@model IEnumerable<website.Models.Medicine>
+
+@{
+    ViewData["Title"] = "Medicine List";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Medicine Inventory</h2>
+
+    <div class="text-end mb-3">
+        <a asp-action="Create" class="btn btn-success">+ Add New Medicine</a>
+    </div>
+
+    <table class="table table-bordered table-hover table-striped text-center align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Image</th>
+                <th>@Html.DisplayNameFor(model => model.First().Medicineid)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Name)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Description)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Manufacturer)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Price)</th>
+                <th>Discount</th>
+                <th>Final Price</th>
+                <th>@Html.DisplayNameFor(model => model.First().Stockquantity)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Expirydate)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var hasDiscount = item.Discount.HasValue && item.Discount.Value > 0;
+                var discountedPrice = hasDiscount
+                ? item.Price - (item.Price * item.Discount.Value / 100)
+                : item.Price;
+
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Imagepath))
+                        {
+                            <img src="@Url.Content(item.Imagepath)" alt="Medicine Image" width="80" height="80" class="img-thumbnail" />
+                        }
+                        else
+                        {
+                            <span class="text-muted">No Image</span>
+                        }
+                    </td>
+                    <td>@item.Medicineid</td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Manufacturer</td>
+                    <td>
+                        @if (hasDiscount)
+                        {
+                            <span class="text-muted text-decoration-line-through">$@item.Price</span>
+                        }
+                        else
+                        {
+                            <span>$@item.Price</span>
+                        }
+                    </td>
+                    <td>
+                        @if (hasDiscount)
+                        {
+                            <span class="text-success">@item.Discount% off</span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">–</span>
+                        }
+                    </td>
+                    <td>
+                        <span class="fw-bold text-primary">$@discountedPrice:F2</span>
+                    </td>
+                    <td>@item.Stockquantity</td>
+                    <td>@Html.DisplayFor(modelItem => item.Expirydate)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Medicineid" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Medicineid" class="btn btn-sm btn-info">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.Medicineid" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

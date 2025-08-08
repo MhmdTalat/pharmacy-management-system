@@ -1,0 +1,46 @@
+﻿@model website.Models.Customer
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-danger shadow">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">Delete Customer</h3>
+                </div>
+                <div class="card-body">
+                    <h5 class="text-center text-danger mb-4">Are you sure you want to delete this customer?</h5>
+
+                    <dl class="row">
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Customerid)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Customerid)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Fullname)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Fullname)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Phone)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Phone)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Email)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Email)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Address)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Address)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Dateofbirth)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Dateofbirth)</dd>
+                    </dl>
+
+                    <form asp-action="DeleteConfirmed" asp-route-id="@Model.Customerid" method="post" class="mt-4 text-center">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger me-3">Delete</button>
+                        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

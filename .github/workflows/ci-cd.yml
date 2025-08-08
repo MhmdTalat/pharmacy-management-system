@@ -1,0 +1,138 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+    
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+    
+    - name: Test
+      run: dotnet test --no-build --verbosity normal --configuration Release
+    
+    - name: Publish
+      run: dotnet publish -c Release -o ./publish
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: pharmacy-app
+        path: ./publish
+
+  code-quality:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+    
+    - name: Install SonarCloud
+      uses: sonarqube-quality-gate-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        scannerHome: ${{ github.workspace }}/.sonar/sonar-scanner
+        args: >
+          -Dsonar.projectKey=pharmacy-management-system
+          -Dsonar.sources=.
+          -Dsonar.host.url=https://sonarcloud.io
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Run OWASP ZAP Scan
+      uses: zaproxy/action-full-scan@v0.8.0
+      with:
+        target: 'https://your-pharmacy-app.azurewebsites.net'
+        rules_file_name: '.zap/rules.tsv'
+        cmd_options: '-a'
+
+  deploy-staging:
+    runs-on: ubuntu-latest
+    needs: [build, code-quality, security-scan]
+    if: github.ref == 'refs/heads/develop'
+    environment: staging
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: pharmacy-app
+        path: ./publish
+    
+    - name: Deploy to Azure Staging
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: 'pharmacy-app-staging'
+        package: ./publish
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_STAGING }}
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    needs: [build, code-quality, security-scan]
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: pharmacy-app
+        path: ./publish
+    
+    - name: Deploy to Azure Production
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: 'pharmacy-app-production'
+        package: ./publish
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_PRODUCTION }}
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: [deploy-staging, deploy-production]
+    if: always()
+    
+    steps:
+    - name: Notify on Success
+      if: success()
+      run: |
+        echo "Deployment completed successfully!"
+        # Add notification logic here (Slack, Teams, etc.)
+    
+    - name: Notify on Failure
+      if: failure()
+      run: |
+        echo "Deployment failed!"
+        # Add notification logic here (Slack, Teams, etc.) 

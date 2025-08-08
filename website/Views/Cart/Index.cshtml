@@ -1,0 +1,77 @@
+﻿@model IEnumerable<website.Models.Cartitem>
+
+@{
+    ViewData["Title"] = "Your Cart";
+
+    decimal totalCartAmount = 0m; // إجمالي السلة
+}
+
+<h2 class="mb-4 text-primary fw-bold">🛒 Your Cart</h2>
+
+<table class="table table-hover table-striped align-middle shadow-sm">
+    <thead class="table-dark text-center">
+        <tr>
+            <th>Image</th>
+            <th>Medicine</th>
+            <th>Original Price</th>
+            <th>Discount %</th>
+            <th>Price After Discount</th>
+            <th>Quantity</th>
+            <th>Total After Discount</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @foreach (var item in Model)
+        {
+            var price = item.Medicine?.Price ?? 0m;
+            var discountPercentage = item.Medicine?.Discount ?? 0m;
+            var discountAmount = price * (discountPercentage / 100);
+            var priceAfterDiscount = price - discountAmount;
+            var totalAfterDiscount = priceAfterDiscount * item.Quantity;
+
+            totalCartAmount += totalAfterDiscount ?? 0m;
+
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Medicine?.Imagepath))
+                    {
+                        <img src="@item.Medicine.Imagepath" alt="@item.Medicine.Name"
+                             class="rounded shadow-sm" style="width:80px; height:auto;" />
+                    }
+                </td>
+                <td class="fw-semibold">@item.Medicine?.Name</td>
+                <td>@price.ToString("C")</td>
+                <td class="text-danger fw-bold">@discountPercentage %</td>
+                <td class="text-success">@priceAfterDiscount.ToString("C")</td>
+                <td>@item.Quantity</td>
+                <td class="fw-bold text-primary">@totalAfterDiscount</td>
+                <td>
+                    <a asp-action="RemoveFromCart" asp-route-id="@item.Cartitemid"
+                       class="btn btn-outline-danger btn-sm">
+                        <i class="bi bi-trash"></i> Remove
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="d-flex justify-content-between align-items-center mt-4 p-3 bg-light rounded shadow-sm">
+    <h4 class="mb-0 fw-bold">
+        Total Cart Amount:
+        <span class="text-success">@totalCartAmount.ToString("C")</span>
+    </h4>
+    <div>
+        <form asp-action="CreateCheckoutSession" asp-controller="Payment" method="post" class="d-inline">
+            <!-- Send cartId instead of amount -->
+            <input type="hidden" name="cartId" value="@Model.FirstOrDefault()?.Cartid" />
+            <button type="submit" class="btn btn-success me-2">
+                <i class="bi bi-credit-card"></i> Pay with Stripe
+            </button>
+        </form>
+        <a asp-action="ClearCart" class="btn btn-warning text-white">
+            <i class="bi bi-x-circle"></i> Clear Cart
+        </a>
+    </div>
+</div>

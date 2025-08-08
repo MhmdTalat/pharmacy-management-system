@@ -1,0 +1,43 @@
+﻿@model website.Models.Customer
+
+@{
+    ViewData["Title"] = "Customer Details";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-info">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0">Customer Details</h3>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Customerid)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Customerid)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Fullname)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Fullname)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Phone)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Phone)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Email)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Email)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Address)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Address)</dd>
+
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Dateofbirth)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Dateofbirth)</dd>
+                    </dl>
+
+                    <div class="mt-4 text-center">
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.Customerid }, new { @class = "btn btn-primary me-3" })
+                        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿@model website.Models.Cartitem
+
+@{
+    ViewData["Title"] = "Remove Item from Cart";
+}
+
+<div class="container mt-5">
+    <h2 class="text-danger mb-4">Remove Item from Cart</h2>
+
+    <h4>Are you sure you want to remove this item?</h4>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-3">Cart Item ID</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Cartitemid)</dd>
+
+        <dt class="col-sm-3">Cart ID</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Cartid)</dd>
+
+        <dt class="col-sm-3">Medicine ID</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Medicineid)</dd>
+
+        <dt class="col-sm-3">Quantity</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Quantity)</dd>
+    </dl>
+
+    <form asp-action="RemoveFromCart" method="post">
+        @* Hidden field to send the item ID back to the controller *@
+        <input type="hidden" asp-for="Cartitemid" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>

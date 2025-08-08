@@ -1,0 +1,42 @@
+﻿@model website.Models.Medicine
+
+@{
+    ViewData["Title"] = "Confirm Delete - Medicine";
+}
+
+<div class="container mt-5">
+    <h2 class="text-danger">Delete Confirmation</h2>
+    <p class="lead">Are you sure you want to permanently delete this medicine?</p>
+
+    <div class="bg-light p-4 border rounded shadow-sm mb-4">
+        <h4 class="mb-3">Medicine Details</h4>
+        <dl class="row">
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Medicineid)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Medicineid)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Name)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Name)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Description)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Description)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Manufacturer)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Manufacturer)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Price)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Price)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Stockquantity)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Stockquantity)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Expirydate)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(m => m.Expirydate)</dd>
+        </dl>
+    </div>
+
+    <form asp-action="DeleteConfirmed" asp-route-id="@Model.Medicineid" method="post" class="d-flex gap-2">
+        @Html.AntiForgeryToken()
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </form>
+</div>

@@ -1,0 +1,103 @@
+﻿@model website.Models.Medicine
+
+@{
+    ViewData["Title"] = "Add New Medicine";
+}
+
+<div class="container mt-5">
+    <h2 class="text-success mb-4">Add New Medicine</h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create" enctype="multipart/form-data" class="shadow p-4 rounded bg-light">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Manufacturer" class="form-label"></label>
+                    <input asp-for="Manufacturer" class="form-control" />
+                    <span asp-validation-for="Manufacturer" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Price" class="form-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Discount" class="form-label"></label>
+                    <input asp-for="Discount" class="form-control" />
+                    <span asp-validation-for="Discount" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Stockquantity" class="form-label"></label>
+                    <input asp-for="Stockquantity" class="form-control" />
+                    <span asp-validation-for="Stockquantity" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Expirydate" class="form-label"></label>
+                    <input asp-for="Expirydate" type="date" class="form-control" />
+                    <span asp-validation-for="Expirydate" class="text-danger"></span>
+                </div>
+
+                <!-- Image Upload Field -->
+                <div class="mb-3">
+                    <label for="ImageFile" class="form-label">Upload Image</label>
+                    <input type="file" class="form-control" name="ImageFile" id="ImageFile" accept="image/*" />
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+
+                <!-- Preview Card -->
+                <div class="card shadow rounded p-3 mt-4 bg-white" style="max-width: 400px;">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">@Model.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Manufacturer: @Model.Manufacturer</h6>
+
+                        <p class="card-text">
+                            <strong>Description:</strong><br />
+                            @Model.Description
+                        </p>
+
+                        <p class="card-text">
+                            <strong>Price:</strong> $@Model.Price
+                            @if (Model.Discount.HasValue && Model.Discount > 0)
+                            {
+                                <span class="badge bg-success ms-2">@Model.Discount% OFF</span>
+                            }
+                        </p>
+
+                        <p class="card-text">
+                            <strong>Stock:</strong> @Model.Stockquantity units<br />
+                            <strong>Expiry:</strong> @Model.Expirydate?.ToString("yyyy-MM-dd")
+                        </p>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
